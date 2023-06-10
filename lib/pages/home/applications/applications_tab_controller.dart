@@ -1,27 +1,35 @@
 import 'package:get/get.dart';
 import 'package:ontochain_mobile_wallet/model/loan_application.dart';
+import 'package:ontochain_mobile_wallet/model/loan_offer.dart';
+import 'package:ontochain_mobile_wallet/service/credit_bureau_service.dart';
 
 class ApplicationsTabController extends GetxController {
-  var loans = List<LoanApplication>.empty(growable: true).obs;
+  final _cbService = Get.find<CreditBureauService>();
+  final _offers = List<LoanOffer>.empty().obs;
+
+  var applications = List<LoanApplication>.empty().obs;
   var isLoading = true.obs;
 
   @override
   void onInit() {
-    loadLoans();
     super.onInit();
+    load();
   }
 
-  void loadLoans() async {
+  Future<void> load() async {
     isLoading.value = true;
-    loans.addAll([
-      LoanApplication(
-          id: '6458d3bbfab35845e119f248',
-          offerId: '6458d3bbfab35845e119f248',
-          amount: 1000.0,
-          status: "OPEN",
-          meta: {},
-          createdAt: DateTime.now()),
-    ]);
+    _offers.value = await _cbService.getOffers().toList();
+    applications.value = await _cbService.getApplications().toList();
     isLoading.value = false;
+  }
+
+  String getOfferName(String offerId) =>
+      _offers.firstWhereOrNull((el) => el.id == offerId)?.name ?? 'Unknown';
+
+  Future<void> newApplication() async {
+    final result = await Get.toNamed('/apply_loan_dialog');
+    if (result == true) {
+      load();
+    }
   }
 }

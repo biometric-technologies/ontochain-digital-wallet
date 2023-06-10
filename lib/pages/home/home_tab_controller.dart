@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeTabController extends GetxController
+class HomeViewController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final List<Tab> tabs = <Tab>[
     const Tab(text: 'Loans'),

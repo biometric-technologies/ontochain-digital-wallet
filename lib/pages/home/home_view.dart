@@ -4,8 +4,10 @@ import 'package:ontochain_mobile_wallet/pages/home/applications/applications_tab
 import 'package:ontochain_mobile_wallet/pages/home/credentials/credentials_tab.dart';
 import 'package:ontochain_mobile_wallet/pages/home/home_tab_controller.dart';
 import 'package:ontochain_mobile_wallet/pages/home/loans/loans_tab.dart';
+import 'package:ontochain_mobile_wallet/shared/drawer/app_drawer.dart';
+import 'package:ontochain_mobile_wallet/shared/drawer/app_drawer_controller.dart';
 
-class HomeView extends GetView<HomeTabController> {
+class HomeView extends GetView<HomeViewController> {
   const HomeView({super.key});
 
   @override
@@ -19,30 +21,16 @@ class HomeView extends GetView<HomeTabController> {
           tabs: controller.tabs,
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('CREDIT WALLET',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
-            ListTile(
-              title: Text('Profile'),
-              onTap: () {
-                // Navigate to Profile
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const DrawerView(),
+      onDrawerChanged: (isOpened) {
+        if (isOpened) {
+          final drawerController = Get.find<AppDrawerController>();
+          drawerController.load();
+        }
+      },
       body: TabBarView(
         controller: controller.controller,
-        children: [
+        children: const [
           LoansTab(),
           ApplicationsTab(),
           CredentialsTab(),

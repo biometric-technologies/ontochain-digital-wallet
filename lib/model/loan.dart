@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 class Loan {
   final String id;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final double sumUSD;
-  final String status;
+  final LoanStatus status;
 
   Loan({
     required this.id,
@@ -15,4 +13,13 @@ class Loan {
     required this.status,
   });
 
+  factory Loan.fromJson(Map<String, dynamic> json) => Loan(
+      id: json['id'],
+      startDate: DateTime.parse(json['startDate']),
+      endDate: DateTime.parse(json['endDate']),
+      sumUSD: double.parse(json['sumUSD']),
+      status: LoanStatus.values
+          .firstWhere((e) => e.name.toUpperCase() == json['status']));
 }
+
+enum LoanStatus { open, closed }
