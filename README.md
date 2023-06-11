@@ -1,16 +1,26 @@
-# ontochain_mobile_wallet
+# Ingress Credit Wallet
 
-open source mobile wallet for vc's
+User mobile application to store credentials and fetch loan information
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Pre-requirements
 
-A few resources to get you started if this is your first Flutter project:
+* [Dart/Flutter 3.0+](https://docs.flutter.dev/get-started/install/windows)
+* [Android SDK](https://developer.android.com/studio)
+* [IOS SDK](https://developer.apple.com/ios/)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Build
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Download dependencies: `flutter packages pub get`
+2. Update `lib/constants.dart` file with biometric and credit bureaus API urls
+   ```
+    BIOMETRIC_BUREAU_URL =...
+    CREDIT_BUREAU_URL =...
+   ```
+3. Build debug apk:  `flutter build apk --debug`
+4. Build and sign:
+
+* [Android](https://docs.flutter.dev/deployment/android)
+* [IOS](https://docs.flutter.dev/deployment/ios)
+
