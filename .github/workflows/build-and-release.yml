@@ -23,7 +23,7 @@ jobs:
           PROJECT_VERSION=$(grep 'version:' ./pubspec.yaml | awk '{print $2}')
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
           echo "project-version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
-          TAG_EXISTS=$(git tag | grep -oP "^$PROJECT_VERSION$" || echo "")        
+          TAG_EXISTS=$(git tag | grep -oF "$PROJECT_VERSION" || echo "")
           if [[ -n "$TAG_EXISTS" ]]; then
             echo "version-changed=false" >> $GITHUB_OUTPUT
           else
