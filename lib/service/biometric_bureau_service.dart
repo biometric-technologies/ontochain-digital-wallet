@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -28,9 +29,8 @@ class BiometricBureauService extends GetxService {
     }
   }
 
-  Future<void> register(List<XFile> biometrics) async {
-    final biometricsEncoded =
-        biometrics.map((f) async => base64Encode(await f.readAsBytes()));
+  Future<void> register(List<Uint8List> biometrics) async {
+    final biometricsEncoded = biometrics.map((f) async => base64Encode(f));
     final biometricData = await Future.wait(biometricsEncoded);
     final privateKey = (await _storage.read(key: 'privateKey'))!;
     final publicKey = (await _storage.read(key: 'publicKey'))!;
@@ -42,7 +42,7 @@ class BiometricBureauService extends GetxService {
     };
     final response = await _http.post('/v1/users/auth/register', formData);
     if (!response.status.isOk) {
-      throw ServiceException(response.body['message'] ?? '');
+      throw ServiceException(response.body['message'] ?? response.statusText!);
     }
     final credential = BiometricCredential.fromJson(response.body);
     final credentials = await getCredentials().toList();

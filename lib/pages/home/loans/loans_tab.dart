@@ -90,7 +90,7 @@ class LoanRow extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: '\$${loan.sumUSD.toStringAsFixed(2)}',
+                    text: '\$${loan.amount.toStringAsFixed(2)}',
                     style: const TextStyle(fontWeight: FontWeight.normal),
                   )
                 ],
@@ -98,30 +98,29 @@ class LoanRow extends StatelessWidget {
             ),
           ],
         ),
-        trailing: LoanStatusWidget(status: loan.status),
+        trailing: LoanStatusWidget(isOpen: loan.open),
       ),
     );
   }
 }
 
 class LoanStatusWidget extends StatelessWidget {
-  final LoanStatus status;
+  final bool isOpen;
 
-  const LoanStatusWidget({super.key, required this.status});
+  const LoanStatusWidget({super.key, required this.isOpen});
 
   @override
   Widget build(BuildContext context) {
-    switch (status) {
-      case LoanStatus.open:
-        return const Chip(
-          label: Text('Open', style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.green,
-        );
-      case LoanStatus.closed:
-        return const Chip(
-          label: Text('Closed', style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.blue,
-        );
+    if (isOpen) {
+      return const Chip(
+        label: Text('Open', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.green,
+      );
+    } else {
+      return const Chip(
+        label: Text('Closed', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blue,
+      );
     }
   }
 }

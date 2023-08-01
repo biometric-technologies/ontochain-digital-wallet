@@ -2,24 +2,22 @@ class Loan {
   final String id;
   final DateTime startDate;
   final DateTime endDate;
-  final double sumUSD;
-  final LoanStatus status;
+  final double amount;
+  final bool open;
 
   Loan({
     required this.id,
     required this.startDate,
     required this.endDate,
-    required this.sumUSD,
-    required this.status,
+    required this.amount,
+    required this.open,
   });
 
   factory Loan.fromJson(Map<String, dynamic> json) => Loan(
       id: json['id'],
       startDate: DateTime.parse(json['startDate']),
       endDate: DateTime.parse(json['endDate']),
-      sumUSD: double.parse(json['sumUSD']),
-      status: LoanStatus.values
-          .firstWhere((e) => e.name.toUpperCase() == json['status']));
+      amount: json['amount'],
+      open: json['open']);
 }
 
-enum LoanStatus { open, closed }

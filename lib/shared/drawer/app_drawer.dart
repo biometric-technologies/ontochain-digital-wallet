@@ -14,11 +14,11 @@ class DrawerView extends GetView<AppDrawerController> {
           Obx(
             () => UserAccountsDrawerHeader(
               accountName: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(controller.name.value),
                   const SizedBox(
-                    width: 10.0,
+                    width: 12.0,
                   ),
                   Row(
                     children: List.generate(
@@ -31,14 +31,10 @@ class DrawerView extends GetView<AppDrawerController> {
               ),
               accountEmail: Text(controller.email.value),
               currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.blueAccent,
-                child: Column(
-                  children: [
-                    Text(
-                      controller.avatar.value,
-                      style: const TextStyle(fontSize: 61.0),
-                    ),
-                  ],
+                backgroundColor: Colors.indigo,
+                child: Text(
+                  controller.avatar.value.toUpperCase(),
+                  style: const TextStyle(fontSize: 61.0),
                 ),
               ),
             ),
